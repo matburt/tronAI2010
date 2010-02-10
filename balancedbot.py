@@ -58,6 +58,7 @@ class TronPlayer(object):
         themDirection, themDistance = self.findThem(board)
         debug("Distance to me: %s" % themDistance)
         debug("Direction from me: %s" % str_direction(themDirection))
+
         if self.lastDirection is not None \
                 and board.passable(board.rel(self.lastDirection)) \
                 and themDistance > 2:
@@ -66,15 +67,6 @@ class TronPlayer(object):
 
         if not board.passable(board.rel(themDirection)):
             newDirection = random.choice(board.moves())
-        elif themDistance < 3:
-            try:
-                newDirection = random.choice(list(set(board.moves()).difference(\
-                            [themDirection])))
-            except IndexError:
-                newDirection = random.choice(board.moves())
-        else:
-            newDirection = themDirection
-
         self.lastDirection = newDirection
         debug("Moving %s" % str_direction(newDirection))
         return newDirection
